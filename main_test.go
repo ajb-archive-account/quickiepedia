@@ -39,3 +39,71 @@ func TestHandler(t *testing.T) {
 			actual, expected)
 	}
 }
+
+func TestRouter(t *testing.T) {
+	// Instantiate the router using the constructor defined in main.go
+	r := newRouter()
+
+	// Create new server using httptest library `NewServer` method
+	mockServer := httptest.NewServer(r)
+
+	// GET request to page "/hello"
+	resp, err := http.Get(mockServer.URL + "/hello")
+
+	// Handle errors
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Log status code 200(ok)
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("Status %d (OK)", resp.StatusCode)
+	}
+
+	// Read response body and convert to string
+	defer resp.Body.Close()
+
+	// 1. Read response body into bytes
+	b, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// 2. Convert bytes to string
+	respString := string(b)
+	expected := "Hello World!"
+
+	// Check response matchs handler.
+	if respString != expected {
+		t.Errorf("Response should be %s, got %s", expected, respString)
+	}
+}
+
+func TestRouterForNonExistentRoute(t *testing.T) {
+	r := newRouter()
+	mockServer := httptest.NewServer(r)
+	// Request to a route we know we didn't define, like the `POST /hello` route.
+	resp, err := http.Post(mockServer.URL+"/hello", "", nil)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Check for status 405 (method not allowed)
+	if resp.StatusCode != http.StatusMethodNotAllowed {
+		t.Errorf("Status should be 405, got %d", resp.StatusCode)
+	}
+
+	// Test for an empty body
+	defer resp.Body.Close()
+	b, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		t.Fatal(err)
+	}
+	respString := string(b)
+	expected := ""
+
+	if respString != expected {
+		t.Errorf("Response should be %s, got %s", expected, respString)
+	}
+}
