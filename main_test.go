@@ -26,7 +26,7 @@ func TestHandler(t *testing.T) {
 	hf.ServeHTTP(recorder, req)
 
 	// Check status code
-	if status := recorder.Code; status != httpStatusOK {
+	if status := recorder.Code; status != http.StatusOK {
 		t.Errorf("handler returned wrong status code: got %v want %v",
 			status, http.StatusOK)
 	}
@@ -35,6 +35,7 @@ func TestHandler(t *testing.T) {
 	expected := "Hello, World!"
 	actual := recorder.Body.String()
 	if actual != expected {
-		t.Errorf("handler returned unexpected body: got %v want %v", actual, expected)
+		t.Errorf("handler returned unexpected body: got %v want %v",
+			actual, expected)
 	}
 }

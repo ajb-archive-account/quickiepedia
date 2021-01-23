@@ -12,6 +12,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	fmt.Println("\n	   Running on :8080/hello\n	   Ctrl+C to close\n")
+
 	r := mux.NewRouter()
 	r.HandleFunc("/hello", handler).Methods("GET")
 	http.ListenAndServe(":8080", r)
