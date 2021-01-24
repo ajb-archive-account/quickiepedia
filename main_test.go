@@ -58,7 +58,7 @@ func TestRouter(t *testing.T) {
 
 	// Log status code 200(ok)
 	if resp.StatusCode != http.StatusOK {
-		t.Errorf("Status %d (OK)", resp.StatusCode)
+		t.Errorf("Response should be status 200, got %d (OK)", resp.StatusCode)
 	}
 
 	// Read response body and convert to string
@@ -106,5 +106,30 @@ func TestRouterForNonExistentRoute(t *testing.T) {
 
 	if respString != expected {
 		t.Errorf("Response should be %s, got %s", expected, respString)
+	}
+}
+
+func TestStaticFileServer(t *testing.T) {
+	r := newRouter()
+	mockServer := httptest.NewServer(r)
+
+	// `GET /assets/` route to get the index.html file response
+	resp, err := http.Get(mockServer.URL + "/assets/")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Log for status 200 (ok)
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("Response should be status 200, got %d", resp.StatusCode)
+	}
+
+	// Test that the content-type header is "text/html; charset=utf-8"
+	// so that we know that an html file has been served
+	contentType := resp.Header.Get("Content-Type")
+	expectedContentType := "text/html; charset=utf-8"
+
+	if expectedContentType != contentType {
+		t.Errorf("Wrong content type, expected %s, got %s", expectedContentType, contentType)
 	}
 }
