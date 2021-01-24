@@ -21,7 +21,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 // Router is now formed by calling the `newRouter` constructor defined above.
 func main() {
-	fmt.Println("\n	   Running on :8080/hello\n	   Ctrl+C to close\n")
+	fmt.Println("Running on :8080/hello\nCtrl+C to close")
 	r := newRouter()
 	http.ListenAndServe(":8080", r)
 }

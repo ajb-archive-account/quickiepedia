@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -71,7 +72,7 @@ func TestRouter(t *testing.T) {
 
 	// 2. Convert bytes to string
 	respString := string(b)
-	expected := "Hello World!"
+	expected := "Hello, World!"
 
 	// Check response matchs handler.
 	if respString != expected {
