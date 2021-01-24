@@ -12,7 +12,7 @@ import (
 func newRouter() *mux.Router {
 	r := mux.NewRouter()
 	r.HandleFunc("/hello", handler).Methods("GET")
-	staticFileDirectory := http.Dir("/assets/")
+	staticFileDirectory := http.Dir("./assets/")
 
 	// `stripPrefix` method to remove the "/assets/" prefix when looking for files.
 	// If we did not strip the prefix, the file server would look for
