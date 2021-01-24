@@ -1,4 +1,4 @@
-module watchpedia
+module quickiepedia
 
 go 1.15
 
