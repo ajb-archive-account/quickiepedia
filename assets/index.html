@@ -4,7 +4,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>quickiepedia</title>
   </head>
+
   <body>
-    <h1>This is the index.html page</h1>
+    <h1>Quickiepedia</h1>
+
+    <!-- 
+        Specify table to display list of pages & descriptions 
+    -->
+    <table>
+    <tr>
+      <th>Species</th>
+      <th>Description</th>
+    </tr>
+    <td>Pigeon</td>
+    <td>Common in cities</td>
+    </tr>
+  </table>
+  <br/>
+
+  <!--
+    This section contains the form, that will be used to hit the
+    `POST /bird` API that we will build in the next section
+   -->
+  <form action="/bird" method="post">
+    Species:
+    <input type="text" name="species">
+    <br/> Description:
+    <input type="text" name="description">
+    <br/>
+    <input type="submit" value="Submit">
+  </form>
+
+  <!--
+    Finally, the last section is the script that will
+    run on each page load to fetch the list of birds
+    and add them to our existing table
+   -->
   </body>
 </html>
